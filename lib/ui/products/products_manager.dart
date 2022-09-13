@@ -9,7 +9,7 @@ class ProductManager {
       price: 29.99,
       imageUrl:
           'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-      isFavourite: true,
+      isFavorite: true,
     ),
     Product(
       id: 'p2',
@@ -34,7 +34,7 @@ class ProductManager {
       price: 49.99,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
-      isFavourite: true,
+      isFavorite: true,
     ),
   ];
   int get itemCount {
@@ -46,6 +46,6 @@ class ProductManager {
   }
 
   List get favoriteItems {
-    return _items.where((prodItem) => prodItem.isFavourite).toList();
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 }

@@ -4,7 +4,7 @@ class Product {
   final String description;
   final double price;
   final String imageUrl;
-  final bool isFavourite;
+  final bool isFavorite;
 
   Product ({
     this.id,
@@ -12,7 +12,7 @@ class Product {
     required this.description,
     required this.price,
     required this.imageUrl,
-    this.isFavourite = false,
+    this.isFavorite = false,
   });
 
   Product copyWith({
@@ -21,7 +21,7 @@ class Product {
     String? description,
     double? price,
     String? imageUrl,
-    bool? isFavourite,
+    bool? isFavorite,
   }) {
     return Product (
       id: id ?? this.id,
@@ -29,7 +29,7 @@ class Product {
       description: description ?? this.description,
       price: price ?? this.price,
       imageUrl: imageUrl ?? this.imageUrl,
-      isFavourite: isFavourite ?? this.isFavourite,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 }
