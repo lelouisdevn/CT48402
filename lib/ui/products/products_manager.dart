@@ -37,6 +37,7 @@ class ProductManager {
       isFavorite: true,
     ),
   ];
+  
   int get itemCount {
     return _items.length;
   }
@@ -47,5 +48,9 @@ class ProductManager {
 
   List get favoriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
+  }
+
+  Product findById(String id) {
+    return _items.firstWhere((element) => element.id == id);
   }
 }
