@@ -3,6 +3,7 @@ import 'package:myshop/ui/cart/cart_manager.dart';
 import 'package:myshop/ui/cart/cart_screen.dart';
 import 'package:myshop/ui/products/top_right_badge.dart';
 import 'package:myshop/ui/shared/app_drawer.dart';
+import 'package:provider/provider.dart';
 import 'products_grid.dart';
 import '../shared/app_drawer.dart';
 import '../cart/cart_manager.dart';
@@ -45,15 +46,21 @@ class _ProductsOverviewScreenState extends State {
     //   },
     // );
 
-    return TopRightBadge(
-      data: CartManager().productCount,
-      child: IconButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed(CartScreen.routeName);
-          },
-          icon: const Icon(
-            Icons.shopping_cart,
-          )),
+    return Consumer<CartManager>(
+      builder: (ctx, cartManager, child) {
+        return TopRightBadge(
+          // data: CartManager().productCount,
+          data: cartManager.productCount,
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(CartScreen.routeName);
+            },
+            icon: const Icon(
+              Icons.shopping_cart,
+            ),
+          ),
+        );
+      },
     );
   }
 
