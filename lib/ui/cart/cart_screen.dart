@@ -1,3 +1,4 @@
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'cart_manager.dart';
@@ -61,6 +62,7 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
               backgroundColor: Theme.of(context).primaryColor,
+              //onDeleted: () { Navigator.pushReplacementNamed(context, "/orders"); },
             ),
             TextButton(
               onPressed: () {

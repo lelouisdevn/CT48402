@@ -17,32 +17,40 @@ class ProductGridTile extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
-        footer: buildGridFooterBar(context),
+          footer: buildGridFooterBar(context),
           child: GestureDetector(
-        onTap: () {
-          // print('Go to product detail screen');
-          // Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ProductDetailScreen(product),));
-          Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: product.id,);
-        },
-        child: Image.network(
-          product.imageUrl,
-          fit: BoxFit.cover,
-        ),
-      )),
+            onTap: () {
+              // print('Go to product detail screen');
+              // Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ProductDetailScreen(product),));
+              Navigator.of(context).pushNamed(
+                ProductDetailScreen.routeName,
+                arguments: product.id,
+              );
+            },
+            child: Image.network(
+              product.imageUrl,
+              fit: BoxFit.cover,
+            ),
+          )),
     );
   }
 
   Widget buildGridFooterBar(BuildContext context) {
     return GridTileBar(
       backgroundColor: Colors.black87,
-      leading: IconButton(
-        icon:
-            Icon(product.isFavorite ? Icons.favorite : Icons.favorite_border),
-        color: Theme.of(context).colorScheme.secondary,
-        onPressed: () {
-          print('Toggle a favorite product');
-        },
-      ),
+      leading: ValueListenableBuilder<bool>(
+          valueListenable: product.isFavoriteListenable,
+          builder: (ctx, isFavorite, child) {
+            return IconButton(
+              icon: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_border),
+              color: Theme.of(context).colorScheme.secondary,
+              onPressed: () {
+                // print('Toggle a favorite product');
+                product.isFavorite = !isFavorite;
+              },
+            );
+          }),
       title: Text(
         product.title,
         textAlign: TextAlign.center,

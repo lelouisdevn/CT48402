@@ -24,7 +24,7 @@ class CartItemCard extends StatelessWidget {
       // background ở bên dưới của một cartItem 
       background: Container(
         color: Theme.of(context).errorColor, //red
-        alignment: Alignment.centerRight, 
+        alignment: Alignment.centerLeft, 
         padding: const EdgeInsets.only(right: 20),
         margin: const EdgeInsets.symmetric(
           horizontal: 15,
@@ -38,7 +38,8 @@ class CartItemCard extends StatelessWidget {
       ),
 
 
-      direction: DismissDirection.endToStart,  //phải sang trái
+      // direction: DismissDirection.endToStart,  //phải sang trái
+      direction: DismissDirection.endToStart,
 
       // comfirm to dismiss
       confirmDismiss: (direction) {

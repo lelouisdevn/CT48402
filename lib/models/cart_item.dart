@@ -1,6 +1,5 @@
 // lớp CartItem: tiêu đề, số lượng sản phẩm, giá
 
-
 class CartItem {
   final String id;
   final String title;
