@@ -9,6 +9,7 @@ import 'package:myshop/models/product.dart';
 // import 'ui/products/user_products_screen.dart';
 // import 'ui/cart/cart_screen.dart';
 // import 'ui/orders/orders_screen.dart';
+import 'package:provider/provider.dart';
 
 import 'ui/screens.dart';
 
@@ -22,42 +23,49 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My Shop',
-      debugShowCheckedModeBanner: false, //bỏ chữ Debug ở góc phải màn hình
-      theme: ThemeData(
-        fontFamily: 'Lato',
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.purple,
-        ).copyWith(
-          secondary: Colors.deepOrange,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => ProductManager(),
         ),
-      ),
-      // home: SafeArea(child: ProductDetailScreen(ProductManager().items[0])),
-      // home: const SafeArea(child: ProductsOverviewScreen()),
-      // home: const SafeArea(child: UserProductsScreen())
-      // home: const SafeArea(
-      // child: CartScreen()
-      // child: OrdersScreen(),
-      // ),
+      ],
+      child: MaterialApp(
+        title: 'My Shop',
+        debugShowCheckedModeBanner: false, //bỏ chữ Debug ở góc phải màn hình
+        theme: ThemeData(
+          fontFamily: 'Lato',
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.purple,
+          ).copyWith(
+            secondary: Colors.deepOrange,
+          ),
+        ),
+        // home: SafeArea(child: ProductDetailScreen(ProductManager().items[0])),
+        // home: const SafeArea(child: ProductsOverviewScreen()),
+        // home: const SafeArea(child: UserProductsScreen())
+        // home: const SafeArea(
+        // child: CartScreen()
+        // child: OrdersScreen(),
+        // ),
 
-      home: const ProductsOverviewScreen(),
-      routes: {
-        CartScreen.routeName: (context) => const CartScreen(),
-        OrdersScreen.routeName: (context) => const OrdersScreen(),
-        UserProductsScreen.routeName: (context) => const UserProductsScreen(),
-      },
-      onGenerateRoute: (settings) {
-        if (settings.name == ProductDetailScreen.routeName) {
-          final productId = settings.arguments as String;
-          return MaterialPageRoute(builder: (context) {
-            return ProductDetailScreen(
-              ProductManager().findById(productId),
-            );
-          });
-        }
-        return null;
-      },
+        home: const ProductsOverviewScreen(),
+        routes: {
+          CartScreen.routeName: (context) => const CartScreen(),
+          OrdersScreen.routeName: (context) => const OrdersScreen(),
+          UserProductsScreen.routeName: (context) => const UserProductsScreen(),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == ProductDetailScreen.routeName) {
+            final productId = settings.arguments as String;
+            return MaterialPageRoute(builder: (context) {
+              return ProductDetailScreen(
+                context.read<ProductManager>().findById(productId),
+              );
+            });
+          }
+          return null;
+        },
+      ),
     );
   }
 }
