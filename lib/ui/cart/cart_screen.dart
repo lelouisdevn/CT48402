@@ -1,5 +1,6 @@
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myshop/ui/screens.dart';
 import 'package:provider/provider.dart';
 
 import 'cart_manager.dart';
@@ -67,8 +68,17 @@ class CartScreen extends StatelessWidget {
               //onDeleted: () { Navigator.pushReplacementNamed(context, "/orders"); },
             ),
             TextButton(
-              onPressed: () {
-                print('An order has been added');
+              // onPressed: () {
+              //   // eprint('An order has been added');
+              // },
+              onPressed: cart.totalAmount <= 0
+              ? null
+              : () {
+                context.read<OrdersManager>().addOrder(
+                  cart.products,
+                  cart.totalAmount,
+                );
+                cart.clear();
               },
               style: TextButton.styleFrom(
                 textStyle: TextStyle(color: Theme.of(context).primaryColor),

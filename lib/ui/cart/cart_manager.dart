@@ -52,7 +52,7 @@ class CartManager with ChangeNotifier {
     notifyListeners();
   }
 
-// get the length of "array" _items;
+  // get the length of "array" _items;
   int get productCount {
     return _items.length;
   }
