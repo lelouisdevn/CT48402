@@ -48,7 +48,8 @@ class ProductGridTile extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
               onPressed: () {
                 // print('Toggle a favorite product');
-                product.isFavorite = !isFavorite;
+                // product.isFavorite = !isFavorite;
+                ctx.read<ProductManager>().toggleFavoriteStatus(product);
               },
             );
           }),
