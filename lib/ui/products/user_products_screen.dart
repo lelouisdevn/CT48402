@@ -10,9 +10,13 @@ class UserProductsScreen extends StatelessWidget {
   static const routeName = '/user-products';
   const UserProductsScreen({super.key});
 
+  Future<void> _refreshProducts(BuildContext context) async {
+    await context.read<ProductManager>().fetchProducts(true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final productsManager = ProductManager();
+    // final productsManager = ProductManager();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your products'),
@@ -21,14 +25,27 @@ class UserProductsScreen extends StatelessWidget {
         ],
       ),
       drawer: const AppDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () async => print('refresh products'),
-        child: buildUserProductListView(productsManager),
-      ),
+      // body: RefreshIndicator(
+      //   onRefresh: () async => print('refresh products'),
+      //   child: buildUserProductListView(productsManager),
+      // ),
+      body: FutureBuilder(
+          future: _refreshProducts(context),
+          builder: (ctx, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return RefreshIndicator(
+              child: buildUserProductListView(),
+              onRefresh: () => _refreshProducts(context),
+            );
+          }),
     );
   }
 
-  Widget buildUserProductListView(ProductManager productManager) {
+  Widget buildUserProductListView() {
     return Consumer<ProductManager>(
       builder: (context, productManager, child) {
         return ListView.builder(

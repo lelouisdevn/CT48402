@@ -12,6 +12,7 @@ import 'package:myshop/models/product.dart';
 // import 'ui/orders/orders_screen.dart';
 import 'package:provider/provider.dart';
 
+
 import 'ui/screens.dart';
 
 Future<void> main() async {
@@ -27,8 +28,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // ChangeNotifierProvider(
+        //   create: (context) => AuthManager(),
+        // ),
         ChangeNotifierProvider(
-          create: (context) => ProductManager(),
+          create: (context) => AuthManager(),
+        ),
+        ChangeNotifierProxyProvider<AuthManager, ProductManager>(
+          create: (ctx) => ProductManager(),
+          update: (ctx, authManager, productManager) {
+            productManager!.authToken = authManager.authToken;
+            return productManager;
+          },
         ),
         ChangeNotifierProvider(
           create: (context) => CartManager(),
@@ -36,11 +47,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => OrdersManager(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => AuthManager(),
-        ),
+        
       ],
-      child: Consumer<AuthManager>(builder: (context, authManager, child) {
+      child: Consumer<AuthManager>(
+        builder: (ctx, authManager, child) {
         return MaterialApp(
           title: 'My Shop',
           debugShowCheckedModeBanner: false, //bỏ chữ Debug ở góc phải màn hình
@@ -65,8 +75,8 @@ class MyApp extends StatelessWidget {
               ? const ProductsOverviewScreen()
               // ? const OrdersScreen()
               : FutureBuilder(
-                future: authManager.tryAutoLogin(),
-                  builder: (context, snapshot) {
+                  future: authManager.tryAutoLogin(),
+                  builder: (ctx, snapshot) {
                     return snapshot.connectionState == ConnectionState.waiting
                         ? const SplashScreen()
                         : const AuthScreen();
