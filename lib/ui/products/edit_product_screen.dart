@@ -89,6 +89,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
       await showErrorDialog(context, "Something went wrong!");
     }
 
+    // khong co gi sai ca :)
+    // them vao cho co cai commit
     setState(() {
       _isLoading = false;
     });

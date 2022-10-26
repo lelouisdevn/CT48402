@@ -98,6 +98,7 @@ class ProductManager with ChangeNotifier {
       _items.insert(index, existingProduct);
       notifyListeners();
     }
+    // i dit miscommit so i made this to let it display in status command :)
   }
 
   int get itemCount {
